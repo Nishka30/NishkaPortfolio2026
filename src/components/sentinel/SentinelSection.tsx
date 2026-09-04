@@ -1,11 +1,18 @@
 import { sentinel } from "@/lib/content";
+import { getPypiRecentDownloads } from "@/lib/pypi";
+import { getGithubRepoStats } from "@/lib/github";
 import { Reveal } from "../Reveal";
 import { RiskCard } from "./RiskCard";
 
-export function SentinelSection() {
+export async function SentinelSection() {
+  const [pypi, github] = await Promise.all([
+    getPypiRecentDownloads(sentinel.pypiPackage),
+    getGithubRepoStats(sentinel.githubRepo),
+  ]);
+
   return (
     <div className="rounded-2xl border border-border bg-panel p-6 md:p-10">
-      <div className="flex flex-wrap items-start justify-between gap-6 mb-8">
+      <div className="flex flex-wrap items-start justify-between gap-6 mb-6">
         <div className="max-w-xl">
           <p className="font-mono-tag text-[11px] uppercase tracking-wide text-accent mb-2">
             Featured project
@@ -24,6 +31,28 @@ export function SentinelSection() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2.5 mb-8">
+        <span className="font-mono-tag text-xs px-3 py-1.5 rounded-md border border-border bg-panel-2 text-muted">
+          $ {sentinel.pypiInstall}
+        </span>
+        <a
+          href={sentinel.pypiUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="font-mono-tag text-xs px-3 py-1.5 rounded-md border border-accent/40 text-accent hover:bg-accent/10 transition-colors"
+        >
+          PyPI{pypi.lastMonth !== null ? ` · ${pypi.lastMonth.toLocaleString()} downloads/mo` : ""} ↗
+        </a>
+        <a
+          href={sentinel.githubUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="font-mono-tag text-xs px-3 py-1.5 rounded-md border border-border text-muted hover:text-foreground hover:border-accent/50 transition-colors"
+        >
+          GitHub{github.stars !== null ? ` · ★ ${github.stars}` : ""} ↗
+        </a>
       </div>
 
       <Reveal>

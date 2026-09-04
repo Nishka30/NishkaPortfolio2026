@@ -15,7 +15,14 @@ export function RetrievalCompare() {
         {retrievalApproaches.map((r, i) => (
           <Reveal key={r.key} delay={i * 0.06}>
             <div className="h-full rounded-xl border border-border bg-panel p-6">
-              <h3 className="font-display font-semibold text-lg mb-4">{r.name}</h3>
+              <div className="flex items-center justify-between gap-2 mb-4">
+                <h3 className="font-display font-semibold text-lg">{r.name}</h3>
+                {r.builtAt && (
+                  <span className="font-mono-tag text-[10px] px-2 py-0.5 rounded border border-accent/40 text-accent uppercase tracking-wide shrink-0">
+                    Built at Prolifics
+                  </span>
+                )}
+              </div>
               <div className="flex flex-col gap-0">
                 {r.flow.map((step, idx) => (
                   <div key={step} className="flex flex-col items-center">
@@ -37,6 +44,7 @@ export function RetrievalCompare() {
                 ))}
               </div>
               <p className="mt-4 text-sm text-muted leading-relaxed">{r.note}</p>
+              {r.builtAt && <p className="mt-2 text-xs text-accent leading-relaxed">{r.builtAt}</p>}
             </div>
           </Reveal>
         ))}

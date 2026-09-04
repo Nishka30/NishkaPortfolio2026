@@ -22,6 +22,141 @@ export const profile = {
   },
 };
 
+export const nowBuilding = {
+  text: "Currently building AI/Agentic AI systems focused on enterprise automation, including MCP-based tools, RAG, and intelligent data-quality/monitoring workflows.",
+  updated: "2026-09",
+};
+
+export const aaf = {
+  name: "Agentic Assembly Framework",
+  shortName: "AAF",
+  subtitle: "Enterprise Agentic AI Platform",
+  pitch:
+    "A three-layer platform that turns a pile of agents into a governed product surface — one gateway, one YAML file, zero client-side coupling to what's actually running behind it.",
+  layers: [
+    {
+      key: "aaf",
+      name: "AAF (Assembly Framework)",
+      role: "Governance & routing",
+      description:
+        "Config-driven via YAML \"assemblies.\" Validates consumer identity, resolves personas and capabilities, and dynamically routes requests to whichever agent, tool, or MCP implementation is bound to that capability — clients never couple to the implementation, only to the capability name.",
+    },
+    {
+      key: "toolkit",
+      name: "Agentic Toolkit",
+      role: "Execution",
+      description:
+        "Agent definitions, tool registries, workflow orchestration, and pluggable LLM providers, with multi-agent A2A (agent-to-agent) delegation across local and remote agents.",
+    },
+    {
+      key: "mcp",
+      name: "Dynamic MCP Toolkit",
+      role: "Tool exposure",
+      description:
+        "Dynamic MCP tool registration, approval workflows, and branching logic under zero-trust policy enforcement — exposed via an HTTP gateway with REST endpoints for execution, health, and capability discovery.",
+    },
+  ],
+  pipeline: [
+    {
+      key: "identity",
+      label: "Identity",
+      description: "Bearer token checked against the consumer registry.",
+      failStatus: 401,
+      failLabel: "Unauthorized",
+    },
+    {
+      key: "persona",
+      label: "Persona",
+      description: "Resolves what this caller's role permits.",
+      failStatus: 403,
+      failLabel: "Forbidden",
+    },
+    {
+      key: "assembly",
+      label: "Assembly",
+      description: "Routes the capability name to its bound implementation.",
+      failStatus: 404,
+      failLabel: "Not Found",
+    },
+    {
+      key: "health",
+      label: "Health",
+      description: "Checks the dependency behind that binding is alive.",
+      failStatus: 503,
+      failLabel: "Service Unavailable",
+    },
+    {
+      key: "dispatch",
+      label: "Dispatch",
+      description: "Request forwarded to the real agent, tool, or MCP server.",
+      failStatus: null,
+      failLabel: null,
+    },
+  ],
+  scenarios: [
+    {
+      key: "valid",
+      label: "Valid request",
+      failAt: -1,
+      status: 200,
+      statusLabel: "OK",
+      tone: "low" as const,
+      note: "Every stage passed — request dispatched to the bound implementation.",
+    },
+    {
+      key: "invalid-token",
+      label: "Invalid token",
+      failAt: 0,
+      status: 401,
+      statusLabel: "Unauthorized",
+      tone: "high" as const,
+      note: "Bearer token not found in the consumer registry.",
+    },
+    {
+      key: "wrong-persona",
+      label: "Wrong persona",
+      failAt: 1,
+      status: 403,
+      statusLabel: "Forbidden",
+      tone: "high" as const,
+      note: "Caller's resolved persona doesn't permit this capability.",
+    },
+    {
+      key: "unbound",
+      label: "Unbound capability",
+      failAt: 2,
+      status: 404,
+      statusLabel: "Not Found",
+      tone: "medium" as const,
+      note: "No implementation is currently bound to this capability name.",
+    },
+    {
+      key: "unhealthy",
+      label: "Dependency down",
+      failAt: 3,
+      status: 503,
+      statusLabel: "Service Unavailable",
+      tone: "medium" as const,
+      note: "Bound implementation resolved, but its health check is failing.",
+    },
+  ],
+  principles: [
+    {
+      title: "Capability as contract",
+      body: "Capability names are the public contract. Swap the agent, tool, or MCP server behind a binding and callers never notice.",
+    },
+    {
+      title: "Persona-scoped discovery",
+      body: "/capabilities is persona-scoped — the same endpoint returns a different list per token. Permissions are data, not code.",
+    },
+    {
+      title: "No ambiguous failures",
+      body: "Every failure mode is named and specific — 401, 403, 404, or 503. Never a generic 500.",
+    },
+  ],
+  tech: ["Python", "FastAPI", "YAML-driven config", "MCP", "Bearer auth", "Health checks", "REST gateway"],
+};
+
 export const prolifics = {
   company: "Prolifics Corporation Ltd.",
   role: "Associate Software Engineer",
@@ -55,6 +190,7 @@ export const agenticPlatform = {
     "Built an internal developer platform for generating configurable AI backend templates with pluggable LLM integrations, authentication modules, and reusable orchestration workflows.",
     "Designed and integrated LLM-powered workflows: prompt orchestration, RAG pipelines, context-aware execution, tool-calling, and multi-agent orchestration for intelligent backend automation.",
     "Developed an MCP-based orchestration framework enabling AI agents to dynamically generate and execute tools from natural language prompts, using modular tool registries and runtime execution pipelines.",
+    "Contributed to multi-agent workflow orchestration — agent-to-agent delegation, handoff logic, and coordinated task execution across the platform's execution layer.",
   ],
   tech: ["MCP", "LLM integration", "YAML-driven config", "Multi-agent orchestration", "Azure"],
   note: "Framed at the level of contribution documented on my resume — not a claim of sole authorship.",
@@ -120,6 +256,11 @@ export const sentinel = {
     disclaimer: "Illustrative demo using example numbers from the project README — not a live model.",
   },
   tech: ["Python", "LightGBM", "SHAP", "networkx", "MCP", "GitHub Actions", "NVIDIA OpenAI-compatible API"],
+  pypiPackage: "sentinel-risk",
+  pypiUrl: "https://pypi.org/project/sentinel-risk/",
+  pypiInstall: "pip install sentinel-risk",
+  githubUrl: "https://github.com/Nishka30/SentinalScan",
+  githubRepo: "Nishka30/SentinalScan",
 };
 
 export const monitoringMcp = {
@@ -135,6 +276,43 @@ export const monitoringMcp = {
   ],
   tech: ["Python", "FastMCP", "Azure OpenAI", "Docker", "Streamable HTTP MCP", "JSON Schema"],
   pipeline: ["tool.py", "tool.yaml", "Auto-discovery", "AST security scan", "JSON-schema validation", "Registered & callable"],
+};
+
+export const painScript = {
+  name: "PainScript",
+  subtitle: "Healthcare / Mental-Health Platform",
+  role: "Full-Stack Developer",
+  pitch:
+    "A healthcare platform used by patients, clinicians, staff, and administrators — full-stack work across web and mobile, plus an AI proof of concept that watches the data behind it.",
+  positioning:
+    "Full-Stack Engineer building enterprise healthcare applications, with hands-on experience developing AI/Agentic AI solutions on top of real-world production systems.",
+  details: [
+    "Contributed as a Full-Stack Developer across multiple applications: clinician/admin-facing web applications and a React Native mobile app used by patients, using Java, SQL, React, Angular, and React Native.",
+    "The patient mobile app captures regular health and behavioral surveys; built the submission and scoring workflows that surface the resulting information to clinicians to track patient progress and flag relevant changes.",
+    "Built and maintained clinician/admin workflows across both web and mobile applications, working with healthcare data and database-driven systems throughout.",
+  ],
+  aiPoc: {
+    title: "AI / Agentic AI proof of concept",
+    description:
+      "Separately built an AI agent capable of connecting to the application's database and running automated, recurring data-quality health checks — instead of relying entirely on manual investigation.",
+    checks: [
+      { key: "duplicates", label: "Duplicate record scan", detail: "Detecting potential duplicate patient records" },
+      { key: "processing", label: "Submission processing check", detail: "Verifying survey submissions are being scored correctly" },
+      { key: "anomalies", label: "Anomaly detection", detail: "Identifying anomalies or inconsistencies in the data" },
+      { key: "report", label: "Actionable report", detail: "Surfacing findings instead of requiring manual investigation" },
+    ],
+  },
+  tech: ["Java", "SQL", "React", "Angular", "React Native"],
+  note: "Described at the level of contribution and architecture — no patient or clinical data specifics beyond what's already general knowledge of the platform's purpose.",
+};
+
+export const internalRag = {
+  name: "Internal Vectorless RAG",
+  subtitle: "Prolifics — enterprise knowledge retrieval",
+  pitch:
+    "Built an internal vectorless RAG system using BM25 + SQLite for efficient document retrieval, with an LLM generating grounded responses from retrieved enterprise knowledge.",
+  tech: ["BM25", "SQLite", "LLM integration"],
+  note: "The real system behind the Vectorless RAG approach below — chosen deliberately over embeddings for this retrieval problem, not a default.",
 };
 
 export const careNexus = {
@@ -157,7 +335,15 @@ export const careNexus = {
   note: "Built on synthetic patient data (Synthea) — no real patient or clinician records involved.",
 };
 
-export const retrievalApproaches = [
+export type RetrievalApproach = {
+  key: string;
+  name: string;
+  flow: string[];
+  note: string;
+  builtAt?: string;
+};
+
+export const retrievalApproaches: RetrievalApproach[] = [
   {
     key: "vector",
     name: "Vector RAG",
@@ -169,6 +355,7 @@ export const retrievalApproaches = [
     name: "Vectorless RAG",
     flow: ["Documents", "BM25 + SQLite", "Relevant chunks", "LLM"],
     note: "Lexical retrieval, no embeddings or vector infra — simpler ops when semantic recall isn't the bottleneck.",
+    builtAt: "Built internally at Prolifics for enterprise knowledge retrieval — see Internal Vectorless RAG below.",
   },
   {
     key: "graph",
@@ -176,7 +363,7 @@ export const retrievalApproaches = [
     flow: ["Documents", "Knowledge graph (Neo4j)", "Relevant chunks", "LLM"],
     note: "Entity/relationship traversal — useful when the question depends on how things connect, not just what they say.",
   },
-] as const;
+];
 
 export type SkillGroup = {
   title: string;

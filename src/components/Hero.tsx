@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, type CSSProperties, type PointerEvent } from "react";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import { Mail, FileText, ArrowDown } from "lucide-react";
+import { useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import { motion, AnimatePresence, useReducedMotion, type Variants } from "framer-motion";
+import { Mail, FileText, ArrowDown, Terminal, X } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
 import { profile } from "@/lib/content";
 import { TerminalPreview } from "./TerminalPreview";
+import { HeroTerminalMode } from "./HeroTerminalMode";
 
 const links = [
   { label: "Résumé", href: profile.resumeHref, icon: FileText, primary: true },
@@ -39,6 +40,7 @@ const containerVariants: Variants = {
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
+  const [terminalMode, setTerminalMode] = useState(false);
 
   function handlePointerMove(e: PointerEvent<HTMLElement>) {
     const el = sectionRef.current;
@@ -76,53 +78,80 @@ export function Hero() {
 
       <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-20 pb-16 md:pt-28 md:pb-20 grid md:grid-cols-[1.15fr_0.85fr] gap-12 md:gap-8 items-center">
         <div>
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="font-mono-tag text-xs uppercase tracking-[0.18em] text-accent mb-5 flex items-center gap-2"
-          >
-            <span className="relative flex size-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-              <span className="relative inline-flex size-1.5 rounded-full bg-accent" />
-            </span>
-            {profile.tagline} · {profile.location}
-          </motion.p>
+          <div className="flex items-center justify-between gap-3 mb-5">
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="font-mono-tag text-xs uppercase tracking-[0.18em] text-accent flex items-center gap-2"
+            >
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-accent" />
+              </span>
+              {profile.tagline} · {profile.location}
+            </motion.p>
+            <button
+              onClick={() => setTerminalMode((v) => !v)}
+              aria-label={terminalMode ? "Exit terminal mode" : "Enter terminal mode"}
+              className="font-mono-tag text-[11px] px-2.5 py-1.5 rounded-md border border-border text-muted hover:text-accent hover:border-accent/50 transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
+            >
+              {terminalMode ? <X size={12} /> : <Terminal size={12} />}
+              {terminalMode ? "exit" : "terminal"}
+            </button>
+          </div>
 
-          <motion.h1
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="font-display font-semibold tracking-tight text-4xl sm:text-5xl md:text-6xl max-w-3xl leading-[1.08]"
-          >
-            {headline.map((w, i) =>
-              typeof w === "string" ? (
-                <motion.span key={i} variants={wordVariants} className="inline-block mr-[0.28em]">
-                  {w}
-                </motion.span>
-              ) : (
-                <motion.span key={i} variants={wordVariants} className="relative inline-block mr-[0.28em]">
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 -z-10 scale-150 rounded-full bg-accent opacity-30 blur-2xl"
-                  />
-                  <span className="text-accent">{w.accent}</span>
-                </motion.span>
-              )
+          <AnimatePresence mode="wait">
+            {terminalMode ? (
+              <motion.div
+                key="terminal"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="max-w-xl"
+              >
+                <HeroTerminalMode />
+              </motion.div>
+            ) : (
+              <motion.div key="prose" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <motion.h1
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="font-display font-semibold tracking-tight text-4xl sm:text-5xl md:text-6xl max-w-3xl leading-[1.08]"
+                >
+                  {headline.map((w, i) =>
+                    typeof w === "string" ? (
+                      <motion.span key={i} variants={wordVariants} className="inline-block mr-[0.28em]">
+                        {w}
+                      </motion.span>
+                    ) : (
+                      <motion.span key={i} variants={wordVariants} className="relative inline-block mr-[0.28em]">
+                        <span
+                          aria-hidden
+                          className="absolute inset-0 -z-10 scale-150 rounded-full bg-accent opacity-30 blur-2xl"
+                        />
+                        <span className="text-accent">{w.accent}</span>
+                      </motion.span>
+                    )
+                  )}
+                </motion.h1>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  className="mt-6 max-w-xl text-base md:text-lg text-muted leading-relaxed"
+                >
+                  Tool registries, MCP servers, retrieval architecture, and orchestration
+                  layers — not prompt wrappers. Currently{" "}
+                  <span className="text-foreground">{profile.title}</span> at{" "}
+                  <span className="text-foreground">{profile.company}</span>.
+                </motion.p>
+              </motion.div>
             )}
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-6 max-w-xl text-base md:text-lg text-muted leading-relaxed"
-          >
-            Tool registries, MCP servers, retrieval architecture, and orchestration
-            layers — not prompt wrappers. Currently{" "}
-            <span className="text-foreground">{profile.title}</span> at{" "}
-            <span className="text-foreground">{profile.company}</span>.
-          </motion.p>
+          </AnimatePresence>
 
           <motion.div
             initial={{ opacity: 0, y: 12 }}
