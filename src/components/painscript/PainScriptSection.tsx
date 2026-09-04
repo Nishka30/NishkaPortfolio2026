@@ -7,7 +7,7 @@ export function PainScriptSection() {
     <div className="rounded-2xl border border-border bg-panel p-6 md:p-10">
       <div className="max-w-2xl mb-8">
         <p className="font-mono-tag text-[11px] uppercase tracking-wide text-accent mb-2">
-          Featured project
+          {painScript.eyebrow}
         </p>
         <h3 className="font-display text-2xl md:text-3xl font-semibold tracking-tight">
           {painScript.name}

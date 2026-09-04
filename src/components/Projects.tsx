@@ -13,7 +13,7 @@ export function Projects() {
       <SectionHeading
         eyebrow="Featured Projects"
         title="Runnable, inspectable systems — not screenshots"
-        description="Each case study below renders real interaction, not static images: an interactive request-pipeline simulator for the Agentic Assembly Framework, a live risk score from Sentinel's own CLI output format, the tool-registration pipeline behind the Monitoring MCP Toolkit, and a health-check sweep from the PainScript AI proof of concept."
+        description="Each case study below renders real interaction, not static images: an interactive request-pipeline simulator for the Agentic Assembly Framework, a live risk score from SentinelScan's own CLI output format, the tool-registration pipeline behind the Monitoring MCP Toolkit, and a health-check sweep from the PainScript AI proof of concept."
       />
       <div className="space-y-8">
         <Reveal>

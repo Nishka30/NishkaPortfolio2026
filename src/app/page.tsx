@@ -4,6 +4,7 @@ import { NowBanner } from "@/components/NowBanner";
 import { Experience } from "@/components/Experience";
 import { Projects } from "@/components/Projects";
 import { RetrievalCompare } from "@/components/RetrievalCompare";
+import { BeyondRetrieval } from "@/components/BeyondRetrieval";
 import { Skills } from "@/components/Skills";
 import { Achievements } from "@/components/Achievements";
 import { Contact } from "@/components/Contact";
@@ -21,6 +22,7 @@ export default function Home() {
         <Experience />
         <Projects />
         <RetrievalCompare />
+        <BeyondRetrieval />
         <Skills />
         <Achievements />
         <Contact />

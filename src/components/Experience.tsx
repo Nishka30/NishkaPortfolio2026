@@ -8,7 +8,7 @@ export function Experience() {
     <section id="work" className="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-24">
       <SectionHeading
         eyebrow="Experience"
-        title="Production software, with the AI layer built in-house"
+        title="What I've Actually Shipped"
         description="ITMS is a real, currently-deployed logistics platform with real users. The agentic platform work sits alongside it — not instead of it."
       />
 

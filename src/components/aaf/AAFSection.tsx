@@ -8,10 +8,10 @@ export function AAFSection() {
     <div className="rounded-2xl border border-border bg-panel p-6 md:p-10">
       <div className="max-w-2xl mb-8">
         <p className="font-mono-tag text-[11px] uppercase tracking-wide text-accent mb-2">
-          Featured project
+          {aaf.eyebrow}
         </p>
         <h3 className="font-display text-2xl md:text-3xl font-semibold tracking-tight">
-          {aaf.name}
+          {aaf.name} <span className="text-accent">({aaf.shortName})</span>
           <span className="text-muted font-normal text-lg md:text-xl block sm:inline">
             {" "}
             — {aaf.subtitle}
@@ -28,6 +28,7 @@ export function AAFSection() {
           <LayerStack />
         </div>
         <div>
+          <h4 className="font-display font-semibold text-base mb-1">{aaf.pipelineHeading}</h4>
           <p className="font-mono-tag text-[11px] uppercase tracking-wide text-muted mb-4">
             Try the request pipeline
           </p>

@@ -10,8 +10,11 @@ export function Contact() {
             Contact
           </p>
           <h2 className="font-display text-3xl md:text-4xl font-semibold tracking-tight text-balance max-w-2xl mx-auto">
-            Building agentic systems, and open to conversations about them.
+            Let&rsquo;s Build Something That Doesn&rsquo;t Break
           </h2>
+          <p className="mt-3 text-muted max-w-md mx-auto">
+            Building agentic systems, and open to conversations about them.
+          </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
               href={`mailto:${profile.email}`}

@@ -1,4 +1,4 @@
-import { retrievalApproaches } from "@/lib/content";
+import { retrievalApproaches, retrievalIntro } from "@/lib/content";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 
@@ -6,9 +6,9 @@ export function RetrievalCompare() {
   return (
     <section id="retrieval" className="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-24">
       <SectionHeading
-        eyebrow="How I think about retrieval"
-        title="Retrieval architecture is a choice, not a default"
-        description="Three approaches I've built and compared side by side — the point isn't that one wins, it's picking deliberately based on what the question actually needs."
+        eyebrow={retrievalIntro.eyebrow}
+        title={retrievalIntro.title}
+        description={retrievalIntro.description}
       />
 
       <div className="grid gap-5 md:grid-cols-3">
@@ -49,6 +49,10 @@ export function RetrievalCompare() {
           </Reveal>
         ))}
       </div>
+
+      <p className="mt-8 text-sm text-muted text-center max-w-2xl mx-auto leading-relaxed">
+        {retrievalIntro.closing}
+      </p>
     </section>
   );
 }

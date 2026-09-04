@@ -10,7 +10,7 @@ type Entry = {
 const ENTRIES: Entry[] = [
   {
     cmd: "sentinel score --diff HEAD~1",
-    output: ["risk: 67/100 [HIGH]", "5 factors flagged — see Sentinel below"],
+    output: ["risk: 67/100 [HIGH]", "5 factors flagged — see SentinelScan below"],
   },
   {
     cmd: "mcp tools list --registered",

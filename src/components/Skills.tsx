@@ -5,7 +5,11 @@ import { Reveal } from "./Reveal";
 export function Skills() {
   return (
     <section id="skills" className="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-24">
-      <SectionHeading eyebrow="Skills" title="Grouped by where it's used, not alphabetized" />
+      <SectionHeading
+        eyebrow="Skills"
+        title="The Toolbox"
+        description="Grouped by where it's used, not alphabetized."
+      />
 
       <div className="grid gap-4 md:grid-cols-2">
         {skillGroups.map((g, i) => (

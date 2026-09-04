@@ -31,6 +31,8 @@ export const aaf = {
   name: "Agentic Assembly Framework",
   shortName: "AAF",
   subtitle: "Enterprise Agentic AI Platform",
+  eyebrow: "Built at Prolifics",
+  pipelineHeading: "Five Gates, Never a Mystery 500",
   pitch:
     "A three-layer platform that turns a pile of agents into a governed product surface — one gateway, one YAML file, zero client-side coupling to what's actually running behind it.",
   layers: [
@@ -216,7 +218,7 @@ export const priorExperience = [
 ];
 
 export const sentinel = {
-  name: "Sentinel",
+  name: "SentinelScan",
   subtitle: "Deployment Risk Analyzer",
   pitch:
     "Scores whether a code change is safe to deploy — using a model trained on the repository's own bug history, not an LLM's guess.",
@@ -281,6 +283,7 @@ export const monitoringMcp = {
 export const painScript = {
   name: "PainScript",
   subtitle: "Healthcare / Mental-Health Platform",
+  eyebrow: "Client project — built at Prolifics",
   role: "Full-Stack Developer",
   pitch:
     "A healthcare platform used by patients, clinicians, staff, and administrators — full-stack work across web and mobile, plus an AI proof of concept that watches the data behind it.",
@@ -343,27 +346,49 @@ export type RetrievalApproach = {
   builtAt?: string;
 };
 
+export const retrievalIntro = {
+  eyebrow: "How I think about retrieval",
+  title: "One Knowledge Problem. Three Architectures.",
+  description:
+    "I built the same document-intelligence system — upload documents, ask questions, get answers through a chatbot-style interface — three separate ways, to understand how different retrieval strategies change what an AI system can actually do.",
+  closing:
+    "Same knowledge-retrieval problem, three fundamentally different retrieval strategies — because the right architecture depends on the shape of the data, not habit.",
+};
+
 export const retrievalApproaches: RetrievalApproach[] = [
   {
     key: "vector",
     name: "Vector RAG",
     flow: ["Documents", "Embeddings + pgvector (PostgreSQL)", "Relevant chunks", "LLM"],
-    note: "The default — dense embeddings and nearest-neighbor search over a vector store.",
+    note: "Best for semantic similarity — dense embeddings and nearest-neighbor search over a vector store.",
   },
   {
     key: "vectorless",
     name: "Vectorless RAG",
     flow: ["Documents", "BM25 + SQLite", "Relevant chunks", "LLM"],
-    note: "Lexical retrieval, no embeddings or vector infra — simpler ops when semantic recall isn't the bottleneck.",
+    note: "No embeddings, no vector infrastructure — lexical retrieval, simpler ops when semantic recall isn't the bottleneck.",
     builtAt: "Built internally at Prolifics for enterprise knowledge retrieval — see Internal Vectorless RAG below.",
   },
   {
     key: "graph",
     name: "GraphRAG",
     flow: ["Documents", "Knowledge graph (Neo4j)", "Relevant chunks", "LLM"],
-    note: "Entity/relationship traversal — useful when the question depends on how things connect, not just what they say.",
+    note: "Best when relationships between pieces of information matter — entity/relationship traversal over a knowledge graph.",
   },
 ];
+
+export const beyondRetrieval = {
+  eyebrow: "Broader AI experience",
+  title: "Beyond Retrieval: How I've Been Expanding What AI Can Do",
+  steps: [
+    { key: "knowledge", give: "Give AI knowledge", how: "RAG / knowledge retrieval", detail: "The three-architecture system above." },
+    { key: "tools", give: "Give AI tools", how: "MCP / tool calling", detail: "Agents that interact with external systems and APIs, not just generate text." },
+    { key: "interface", give: "Expand the interface", how: "Voice-to-text / speech-to-text", detail: "Interacting with AI beyond typing." },
+    { key: "role", give: "Give AI a role", how: "Multi-agent workflows and orchestration", detail: "Ties to the Prolifics / AAF work above." },
+  ],
+  closing:
+    "I'm most interested in the engineering around the model — retrieval, tools, interfaces, and orchestration — not just the prompt.",
+};
 
 export type SkillGroup = {
   title: string;
@@ -378,15 +403,55 @@ export const skillGroups: SkillGroup[] = [
     items: ["LangChain", "AutoGen", "Semantic Kernel", "MAF", "MCP / FastMCP", "RAG pipelines", "LLM integration", "Multi-agent systems", "LightGBM", "SHAP"],
     emphasis: true,
   },
-  { title: "Frontend", items: ["Angular", "ReactJS", "Next.js", "Redux", "jQuery", "HTML5", "CSS3", "TailwindCSS", "TanStack Grid", "Flutter"] },
+  { title: "Frontend", items: ["Angular", "ReactJS", "Next.js", "Redux", "jQuery", "HTML5", "CSS3", "TailwindCSS", "TanStack Grid", "Flutter", "React Native (Expo)"] },
   { title: "Backend & APIs", items: ["Node.js", "Express.js", ".NET Core / Web APIs", "C#", "FastAPI", "REST APIs", "Microservices", "OAuth2", "JWT", "Redis"] },
   { title: "Databases & Data Engineering", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase", "Pinecone", "Dimensional Modeling", "Databricks"] },
   { title: "Cloud & Dev Tools", items: ["Azure", "AWS", "Docker", "Kubernetes", "OpenShift", "Azure DevOps", "GitHub Actions", "Git", "Postman"] },
   { title: "Domain", items: ["Healthcare / EMR Systems", "FHIR", "HL7"] },
 ];
 
-export const achievements = [
-  { title: "Finalist, Hackfest'23", detail: "IIT ISM Dhanbad" },
-  { title: "2nd Runner-up, HackONova", detail: "Adamas University" },
-  { title: "500+ DSA problems solved", detail: "Across multiple platforms" },
-];
+export const achievements = {
+  eyebrow: "Achievements",
+  title: "Hackathons: Where I Actually Enjoy Working Under Pressure",
+  headlineStat: "3× Hackathon Winner",
+  headlineFollowUp: "Plus a Top 20 finish out of 1,500+ teams at HackFest'23.",
+  entries: [
+    {
+      key: "hackfest23",
+      placement: "Finalist — Top 20 of 1,500+ teams",
+      event: "HackFest'23",
+      org: "IIT (ISM) Dhanbad",
+      date: "April 2023",
+      project: "FemMe Power",
+      detail:
+        "A rural-women employment platform with personalized job matching, employer partnerships, safety features, and a chatbot assistant.",
+      credit: "With Abhishek Mishra & Ayush Jha",
+      featured: true,
+    },
+    {
+      key: "hackonova",
+      placement: "1st Place",
+      event: "HackONova",
+      org: "Adamas University",
+      detail:
+        "36-hour hackathon — built an application against a problem statement set by the university itself.",
+    },
+    {
+      key: "code4web",
+      placement: "1st Place",
+      event: "Code-4-Web",
+      org: "Inter-College Hackathon",
+      detail:
+        'Team Leader, "405 Not Found" (with Saptarshi Banik). Organized by Risers Club, Coders Club & StartUp Club, MCKVIE.',
+    },
+    {
+      key: "fronthack",
+      placement: "1st Place",
+      event: "Front-Hack",
+      org: "Intra-college Front-End Development Contest",
+      date: "May 2022",
+      detail: "Team NOOBS. Organized by The Coders Club & The StartUp Club, MCKVIE.",
+    },
+  ],
+  dsa: { title: "500+ DSA problems solved", detail: "Across multiple platforms" },
+};
