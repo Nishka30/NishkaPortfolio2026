@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getTheme, toggleTheme } from "@/lib/theme";
 
 export function ThemeToggle() {
   const [isLight, setIsLight] = useState(false);
@@ -9,19 +10,17 @@ export function ThemeToggle() {
     // One-time read of the attribute the blocking inline script (ThemeScript)
     // already set before paint, so React's state matches the DOM it inherited.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsLight(document.documentElement.getAttribute("data-theme") === "light");
+    setIsLight(getTheme() === "light");
+
+    const onThemeChange = (e: Event) => setIsLight((e as CustomEvent<string>).detail === "light");
+    window.addEventListener("theme-change", onThemeChange);
+    return () => window.removeEventListener("theme-change", onThemeChange);
   }, []);
 
   function toggle() {
-    const next = !isLight;
-    setIsLight(next);
-    if (next) {
-      document.documentElement.setAttribute("data-theme", "light");
-      localStorage.setItem("theme", "light");
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-      localStorage.setItem("theme", "dark");
-    }
+    const next = toggleTheme();
+    setIsLight(next === "light");
+    window.dispatchEvent(new CustomEvent("theme-change", { detail: next }));
   }
 
   return (

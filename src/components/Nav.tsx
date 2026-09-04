@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
+import { CommandPalette } from "./CommandPalette";
 
 const links = [
   { href: "#work", label: "work" },
@@ -54,6 +55,7 @@ export function Nav() {
           ))}
         </ul>
         <div className="flex items-center gap-3">
+          <CommandPalette />
           <ThemeToggle />
           <button
             onClick={() => setMenuOpen((v) => !v)}

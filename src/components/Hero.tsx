@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import { motion, AnimatePresence, useReducedMotion, type Variants } from "framer-motion";
 import { Mail, FileText, ArrowDown, Terminal, X } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
@@ -41,6 +41,12 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const [terminalMode, setTerminalMode] = useState(false);
+
+  useEffect(() => {
+    const onToggle = () => setTerminalMode((v) => !v);
+    window.addEventListener("toggle-terminal-mode", onToggle);
+    return () => window.removeEventListener("toggle-terminal-mode", onToggle);
+  }, []);
 
   function handlePointerMove(e: PointerEvent<HTMLElement>) {
     const el = sectionRef.current;
