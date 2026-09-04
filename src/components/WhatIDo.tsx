@@ -1,4 +1,4 @@
-import { Workflow, Search, ShieldCheck, Blocks, ArrowRight } from "lucide-react";
+import { Workflow, Search, ShieldCheck, Blocks, ArrowRight, ArrowUpRight } from "lucide-react";
 import type { ComponentType } from "react";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
@@ -80,6 +80,17 @@ export function WhatIDo() {
                 </p>
                 <p className="relative mt-3 text-sm font-semibold leading-snug">{n.label}</p>
                 <p className="relative mt-1.5 text-xs text-muted leading-relaxed">{n.detail}</p>
+                {n.href && (
+                  <a
+                    href={n.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="relative mt-2 inline-flex items-center gap-1 font-mono-tag text-[11px] text-muted hover:text-accent transition-colors"
+                  >
+                    {n.hrefLabel}
+                    <ArrowUpRight size={11} />
+                  </a>
+                )}
               </div>
             );
           })}

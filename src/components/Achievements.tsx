@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import { achievements } from "@/lib/content";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
@@ -81,12 +82,21 @@ export function Achievements() {
       </div>
 
       <Reveal delay={0.14}>
-        <div className="mt-4 rounded-xl border border-border bg-panel-2 px-5 py-4 flex items-center gap-3">
+        <div className="mt-4 rounded-xl border border-border bg-panel-2 px-5 py-4 flex flex-wrap items-center gap-x-3 gap-y-1.5">
           <span className="inline-flex size-1.5 rounded-full bg-accent shrink-0" />
-          <p className="text-sm">
+          <p className="text-sm flex-1 min-w-0">
             <span className="font-semibold">{achievements.dsa.title}</span>{" "}
             <span className="text-muted">— {achievements.dsa.detail}</span>
           </p>
+          <a
+            href={achievements.dsa.verifyUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="w-full sm:w-auto sm:ml-auto inline-flex items-center gap-1.5 font-mono-tag text-[11px] text-muted hover:text-accent transition-colors"
+          >
+            {achievements.dsa.verifyLabel}
+            <ArrowUpRight size={12} />
+          </a>
         </div>
       </Reveal>
 

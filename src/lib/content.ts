@@ -59,15 +59,27 @@ export const whatIDo = {
       key: "fullstack",
       icon: "blocks",
       title: "The product engineering underneath",
-      body: "None of the above matters if the application around it doesn't hold up. Enterprise React, Angular, .NET, Java and SQL work in live logistics and healthcare systems — auth, reporting, real-time messaging, performance.",
+      body: "None of the above matters if the application around it doesn't hold up. Python, FastAPI, Java, React, Angular and SQL across live logistics and healthcare platforms — auth, real-time messaging, dimensional data models and Databricks on the reporting side, and the performance tuning that keeps all of it usable.",
       proof: "See Experience",
       href: "#work",
     },
   ],
 };
 
+// Explicit type so the optional verification link doesn't narrow the array
+// into a union that TypeScript refuses to index.
+export type ImpactNumber = {
+  key: string;
+  value: string;
+  label: string;
+  detail: string;
+  tone: "accent" | "low" | "medium";
+  href?: string;
+  hrefLabel?: string;
+};
+
 // Every figure here is already stated and sourced elsewhere on the page.
-export const impactNumbers = [
+export const impactNumbers: ImpactNumber[] = [
   {
     key: "perf",
     value: "40–50%",
@@ -88,6 +100,8 @@ export const impactNumbers = [
     label: "DSA problems solved",
     detail: "Across multiple competitive platforms",
     tone: "low" as const,
+    href: "https://codolio.com/profile/Nishka",
+    hrefLabel: "verify on Codolio",
   },
   {
     key: "hackathons",
@@ -540,5 +554,12 @@ export const achievements = {
       detail: "Team NOOBS. Organized by The Coders Club & The StartUp Club, MCKVIE.",
     },
   ],
-  dsa: { title: "500+ DSA problems solved", detail: "Across multiple platforms" },
+  dsa: {
+    title: "500+ DSA problems solved",
+    detail: "Across multiple platforms",
+    // Aggregated coding profile — kept as a verification link on the stat itself
+    // rather than a top-level link, so it reads as proof, not as positioning.
+    verifyUrl: "https://codolio.com/profile/Nishka",
+    verifyLabel: "verify on Codolio",
+  },
 };

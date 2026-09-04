@@ -188,7 +188,7 @@ ${achievements.entries
       `- ${e.placement} — ${e.event}, ${e.org}${e.date ? ` (${e.date})` : ""}: ${e.detail}`
   )
   .join("\n")}
-- ${achievements.dsa.title} — ${achievements.dsa.detail}
+- ${achievements.dsa.title} — ${achievements.dsa.detail}. Verifiable at ${achievements.dsa.verifyUrl}
 
 ## Education
 
