@@ -8,6 +8,7 @@ import {
   type ComponentType,
   type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
+import { createPortal } from "react-dom";
 import {
   Command as CommandIcon,
   Search,
@@ -18,6 +19,8 @@ import {
   FileText,
   Mail,
   Layers,
+  Bot,
+  Copy,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
 import { profile, sentinel, aaf } from "@/lib/content";
@@ -44,14 +47,23 @@ export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [toast, setToast] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!toast) return;
+    const id = setTimeout(() => setToast(null), 2400);
+    return () => clearTimeout(id);
+  }, [toast]);
 
   const commands = useMemo<Command[]>(
     () => [
+      { id: "nav-about", label: "Go to What I Do", group: "Navigate", keywords: "about", icon: Layers, run: () => scrollToSection("#about") },
       { id: "nav-work", label: "Go to Experience", group: "Navigate", icon: Layers, run: () => scrollToSection("#work") },
       { id: "nav-projects", label: "Go to Projects", group: "Navigate", icon: Layers, run: () => scrollToSection("#projects") },
       { id: "nav-retrieval", label: "Go to Retrieval", group: "Navigate", icon: Layers, run: () => scrollToSection("#retrieval") },
       { id: "nav-skills", label: "Go to Skills", group: "Navigate", icon: Layers, run: () => scrollToSection("#skills") },
+      { id: "nav-education", label: "Go to Education", group: "Navigate", keywords: "degree college", icon: Layers, run: () => scrollToSection("#education") },
       { id: "nav-contact", label: "Go to Contact", group: "Navigate", icon: Layers, run: () => scrollToSection("#contact") },
       {
         id: "theme",
@@ -73,9 +85,30 @@ export function CommandPalette() {
           window.dispatchEvent(new Event("toggle-terminal-mode"));
         },
       },
+      {
+        id: "llms",
+        label: "Read the machine-readable version (/llms.txt)",
+        group: "Site",
+        keywords: "agent llm curl plaintext",
+        icon: Bot,
+        run: () => openExternal("/llms.txt"),
+      },
       { id: "github", label: "Open GitHub profile", group: "Links", keywords: "nishka30", icon: GithubIcon, run: () => openExternal(profile.github) },
       { id: "linkedin", label: "Open LinkedIn", group: "Links", icon: LinkedinIcon, run: () => openExternal(profile.linkedin) },
       { id: "email", label: `Email ${profile.email}`, group: "Links", icon: Mail, run: () => openExternal(`mailto:${profile.email}`) },
+      {
+        id: "copy-email",
+        label: "Copy email address",
+        group: "Links",
+        keywords: "clipboard",
+        icon: Copy,
+        run: () => {
+          navigator.clipboard
+            ?.writeText(profile.email)
+            .then(() => setToast("Email copied to clipboard"))
+            .catch(() => setToast(`Couldn't copy — it's ${profile.email}`));
+        },
+      },
       { id: "resume", label: "Open résumé (PDF)", group: "Links", icon: FileText, run: () => openExternal(profile.resumeHref) },
       { id: "pypi", label: "Open SentinelScan on PyPI", group: "Links", keywords: "pip install", icon: ExternalLink, run: () => openExternal(sentinel.pypiUrl) },
       { id: "sentinel-gh", label: "Open SentinelScan on GitHub", group: "Links", keywords: aaf.shortName, icon: ExternalLink, run: () => openExternal(sentinel.githubUrl) },
@@ -158,7 +191,9 @@ export function CommandPalette() {
         <kbd className="text-[10px]">⌘K</kbd>
       </button>
 
-      {open && (
+      {/* Portalled to <body>: the nav's backdrop-blur creates a containing block,
+          which would otherwise anchor these fixed layers to the header. */}
+      {open && createPortal(
         <div
           className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4 bg-black/60 backdrop-blur-sm"
           onClick={() => setOpen(false)}
@@ -212,7 +247,18 @@ export function CommandPalette() {
               <span>esc close</span>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
+      )}
+
+      {toast && createPortal(
+        <div
+          role="status"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] rounded-md border border-accent/40 bg-panel px-4 py-2.5 font-mono-tag text-xs text-accent shadow-lg"
+        >
+          {toast}
+        </div>,
+        document.body
       )}
     </>
   );

@@ -14,12 +14,99 @@ export const profile = {
   github: "https://github.com/Nishka30",
   linkedin: "https://www.linkedin.com/in/nishka-codes/",
   resumeHref: "/resume.pdf",
+  timezone: "IST · UTC+5:30",
   education: {
     degree: "B.Tech, Computer Science",
     school: "MCKV Institute of Engineering",
     years: "2021–2025",
     gpa: "CGPA 9.6",
   },
+};
+
+// Capability areas — each one points at real work elsewhere on this page, so
+// nothing here is a claim the site doesn't already back up.
+export const whatIDo = {
+  eyebrow: "What I actually do",
+  title: "Four Things I Get Hired For",
+  description:
+    "The through-line across everything below: I work on the layer between a model and the people relying on it.",
+  areas: [
+    {
+      key: "orchestration",
+      icon: "workflow",
+      title: "Orchestration & tool infrastructure",
+      body: "MCP servers, tool registries, and governed gateways — the layer agents call through. Config-driven routing, persona-scoped capability discovery, and failure modes that are named rather than collapsing into a generic 500.",
+      proof: "See Agentic Assembly Framework",
+      href: "#projects",
+    },
+    {
+      key: "retrieval",
+      icon: "search",
+      title: "Retrieval that matches the data",
+      body: "I built the same document-intelligence system three ways — dense vectors, BM25, and a knowledge graph — to learn where each one actually wins. The vectorless one is running internally at Prolifics.",
+      proof: "See the retrieval comparison",
+      href: "#retrieval",
+    },
+    {
+      key: "ml",
+      icon: "shield",
+      title: "ML that ships behind a contract",
+      body: "Models trained on real history rather than an LLM's guess, with explainability attached and the boundary drawn deliberately — in SentinelScan the score is computed and frozen before the LLM is allowed to narrate it.",
+      proof: "See SentinelScan",
+      href: "#projects",
+    },
+    {
+      key: "fullstack",
+      icon: "blocks",
+      title: "The product engineering underneath",
+      body: "None of the above matters if the application around it doesn't hold up. Enterprise React, Angular, .NET, Java and SQL work in live logistics and healthcare systems — auth, reporting, real-time messaging, performance.",
+      proof: "See Experience",
+      href: "#work",
+    },
+  ],
+};
+
+// Every figure here is already stated and sourced elsewhere on the page.
+export const impactNumbers = [
+  {
+    key: "perf",
+    value: "40–50%",
+    label: "Faster page loads",
+    detail: "ITMS logistics platform at Prolifics",
+    tone: "low" as const,
+  },
+  {
+    key: "query",
+    value: "200→80ms",
+    label: "SQL query execution",
+    detail: "~200ms down to 70–80ms after dimensional-model and query tuning",
+    tone: "accent" as const,
+  },
+  {
+    key: "dsa",
+    value: "500+",
+    label: "DSA problems solved",
+    detail: "Across multiple competitive platforms",
+    tone: "low" as const,
+  },
+  {
+    key: "hackathons",
+    value: "3×",
+    label: "Hackathon winner",
+    detail: "Plus Top 20 of 1,500+ teams at HackFest'23",
+    tone: "medium" as const,
+  },
+];
+
+export const educationSection = {
+  eyebrow: "Education",
+  title: "Where The Fundamentals Came From",
+  description:
+    "Computer science degree, finished alongside the hackathons and the problem-solving practice above.",
+  highlights: [
+    "Graduated 2025 and moved straight into enterprise engineering at Prolifics.",
+    "Coursework backed by 500+ solved algorithmic problems and four hackathon results.",
+  ],
 };
 
 export const nowBuilding = {

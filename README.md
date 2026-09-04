@@ -37,18 +37,25 @@ Both are called from `sentinel/SentinelSection.tsx` (an async Server Component) 
 ```text
 src/
   app/
-    layout.tsx           fonts, metadata, theme bootstrap script
+    layout.tsx           fonts, metadata, JSON-LD Person, theme bootstrap script
     globals.css          theme tokens (light/dark), base styles
     page.tsx             assembles the sections below, in order
+    opengraph-image.tsx  generated 1200×630 social card (next/og)
+    llms.txt/route.ts    machine-readable portfolio (see below)
+    robots.ts, sitemap.ts
   lib/
     content.ts           all copy and structured data
+    llmsTxt.ts           renders content.ts as plain text for /llms.txt
     pypi.ts, github.ts   live-stat fetch helpers (see above)
   components/
-    Nav.tsx               sticky nav + mobile menu
+    Nav.tsx               sticky nav, scroll-spy active link, reading-progress bar, mobile menu
+    CommandPalette.tsx    ⌘K/Ctrl+K palette — navigation, theme, terminal mode, links, copy email
+    ConsoleSignature.tsx  styled DevTools greeting pointing at /llms.txt and the repo
     Hero.tsx              headline, CTA links, terminal preview, spotlight, terminal-mode toggle
     TerminalPreview.tsx    animated CLI-style panel in the hero
     HeroTerminalMode.tsx   the hero's terminal-mode Easter egg (toggled by Hero.tsx)
     NowBanner.tsx          dated "currently building" strip below the hero
+    WhatIDo.tsx            four capability areas + the "measured, not claimed" numbers strip
     Experience.tsx         Prolifics + prior internships
     AgenticPlatformCard.tsx  expandable "agentic backend platform" detail card
     Projects.tsx           wraps all project case studies below, in display order
@@ -60,6 +67,7 @@ src/
     carenexus/             CareNexus (healthcare risk analytics) compact card
     RetrievalCompare.tsx   Vector RAG / Vectorless RAG / GraphRAG comparison
     Skills.tsx             grouped skill tags
+    Education.tsx          degree card + location/timezone/availability card
     Achievements.tsx, Contact.tsx, Footer.tsx
     Reveal.tsx             shared scroll-reveal wrapper (Framer Motion)
     ThemeToggle.tsx, ThemeScript.tsx   dark/light theme (dark is the default identity)
@@ -72,6 +80,8 @@ src/
 - **Motion respects `prefers-reduced-motion`.** Looping/decorative animations (the tool-registration diagram, the terminal typing effects, the health-check sweep) check the media query directly and render their resting state instead of animating; scroll-reveals and one-off transitions are handled by Framer Motion, which already honors it.
 - **Interactive case-study pieces render real UI, not screenshots**: an animated risk gauge (`sentinel/RiskGauge.tsx`), a user-driven request-pipeline simulator (`aaf/AAFSimulator.tsx`) that walks five named failure modes (401/403/404/503) instead of an ambiguous 500, a looping tool-registration pipeline (`mcp/ToolDropDiagram.tsx`), and an animated health-check sweep (`painscript/HealthCheckSweep.tsx`).
 - **The terminal-mode Easter egg** (`HeroTerminalMode.tsx`, toggled from `Hero.tsx`) is deliberately contained to one moment in the hero — the rest of the site keeps a cleaner "enterprise systems" look rather than leaning into the CLI aesthetic everywhere.
+- **`/llms.txt` is generated, not written.** `lib/llmsTxt.ts` renders the same `content.ts` the page renders, as plain text, at build time — so the agent-readable copy of the portfolio cannot drift out of sync with the human-readable one. It's linked from the footer (`curl -s …/llms.txt`), from the command palette, and via `<link rel="alternate">`.
+- **Fixed-position overlays are portalled to `<body>`.** The nav's `backdrop-blur` creates a containing block, so a `position: fixed` child of the header anchors to the header rather than the viewport once the page is scrolled. `CommandPalette` renders its overlay and toast through `createPortal`.
 
 ## Deployment
 
