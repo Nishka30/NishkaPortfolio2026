@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/* Dark is the default identity of this site, not a media-query fallback. */
+:root {
+  --background: #08090b;
+  --bg-panel: #111318;
+  --bg-panel-2: #171a21;
+  --border: #262a33;
+  --foreground: #e8eaed;
+  --fg-muted: #9aa0ac;
+  --accent: #22d3ee;
+  --accent-fg: #04222a;
+  --risk-low: #34d399;
+  --risk-medium: #f5b942;
+  --risk-high: #f87171;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --background: #f7f7f5;
+  --bg-panel: #ffffff;
+  --bg-panel-2: #f0efec;
+  --border: #dedcd6;
+  --foreground: #14161a;
+  --fg-muted: #5a5f6b;
+  --accent: #0891a8;
+  --accent-fg: #ffffff;
+  --risk-low: #16a34a;
+  --risk-medium: #b45309;
+  --risk-high: #dc2626;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-panel: var(--bg-panel);
+  --color-panel-2: var(--bg-panel-2);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--fg-muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-risk-low: var(--risk-low);
+  --color-risk-medium: var(--risk-medium);
+  --color-risk-high: var(--risk-high);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.font-mono-tag {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+.grid-fade-mask {
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%);
+}
